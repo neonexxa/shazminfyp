@@ -14,10 +14,17 @@ class DaftarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function regindex()
+    public function index(Request $request)
     {
-        $daftars = Daftar::latest()->paginate(5);
-        return view('posts.regindex', compact('daftars'));
+        $param = $request->all();
+        if (empty($param)) {
+            $daftars = Daftar::latest()->paginate(5);
+            return view('posts.regindex', compact('daftars'));
+        }else{
+            $searchinput = $param['search'];
+            $daftars = Daftar::where('reg_id', 'like', '%' . $searchinput . '%')->latest()->paginate(5);
+            return view('posts.regindex', compact('daftars','searchinput'));
+        }
     }
 
     /**
@@ -39,7 +46,7 @@ class DaftarController extends Controller
     public function store(DaftarRequest $request)
     {
         Daftar::create($request->all());
-        return redirect('regindex')->with ('message', 'Record has been added successfully');
+        return redirect()->route('Daftar.index')->with ('message', 'Record has been added successfully');
     }
     
 
@@ -77,7 +84,7 @@ class DaftarController extends Controller
     public function update(Request $request, $id)
     {
         Daftar::find($id)->update($request->all());
-        return redirect('regindex')->with ('message', 'Record has been updated successfully');
+        return redirect()->route('Daftar.index')->with ('message', 'Record has been updated successfully');
     }
 
     /**
@@ -89,6 +96,6 @@ class DaftarController extends Controller
     public function destroy($id)
     {
         Daftar::find($id)->delete();
-        return redirect('regindex')->with ('message', 'Record has been deleted successfully');
+        return redirect()->route('Daftar.index')->with ('message', 'Record has been deleted successfully');
     }
 }

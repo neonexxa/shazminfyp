@@ -3,9 +3,7 @@
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('/staff') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-            <a href="{{ url('/regindex') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
-            <a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
+            @include('posts.navroute',['panel'=>'register'])
         </div>
 </div>
 
@@ -14,6 +12,19 @@
     <div class="row">
         <div class="col-sm-7">
         <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Register Patient</span></div>
+        </div>
+        <div class="col-sm-5">
+          <div class="pull-right">
+            <div class="input-group">
+                 <form class="navbar-form navbar-left" method="GET">
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="search" value="@if(!empty($searchinput)){{$searchinput}}@endif" placeholder="Search Patient ID">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
+            </div>
+          </div>
         </div>
     </div>
 

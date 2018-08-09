@@ -2,9 +2,7 @@
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
             <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('/staff') }}" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-            <a href="{{ url('/posts') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Appointment</a>
-            <a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
+            @include('posts.navroute',['panel'=>'app'])
         </div>
 </div>
 
@@ -12,28 +10,19 @@
 
     <div class="row">
         <div class="col-sm-7">
-        <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Add Appointment</span></div>
+            <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Add Appointment</span></div>
         </div>
 
         <div class="col-sm-5">
           <div class="pull-right">
             <div class="input-group">
-
-                <input type="text" 
-                        class="form-control" 
-                        value="{{ request()->session()->get('search') }}"
-                        onkeydown="if (event.keyCode == 13) ajaxLoad('{{url('posts')}}?search='+this.value)"
-                        id="search"
-                        name="search"
-                        placeholder="Search Patient ID">
-
-                <div class="input-group-btn">
-                    <button type="submit" name="button" 
-                            onclick="ajaxLoad('{{url('posts')}}?search='+$('#search').val())"
-                            class="btn btn-primary">
-                            <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                 <form class="navbar-form navbar-left" method="GET">
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="search" value="@if(!empty($searchinput)){{$searchinput}}@endif" placeholder="Search Patient ID">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
             </div>
           </div>
         </div>
@@ -61,7 +50,7 @@
 
             <th>Update At</th>
             <th width="160px" style="vertical-align: middle">
-              <a href="{{ URL::route('posts.create') }}"
+              <a href="{{ route('posts.create') }}"
                  class="btn btn-primary btn-xs"> <i class="fa fa-plus" aria-hidden="true"></i> New Appointment</a>
             </th>
 
@@ -71,7 +60,7 @@
         @php
             $i = 1;
         @endphp
-
+        {{-- {{dd($posts)}} --}}
         @foreach ($posts as $post)
           <tr>
             <td>{{$i++}}</td>

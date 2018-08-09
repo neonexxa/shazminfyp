@@ -38,17 +38,29 @@
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
             <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('/staff') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-            <a href="{{ url('/cekindex') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Check-Up Details</a>
-            <a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
+            @include('posts.navroute',['panel'=>'checkup'])
+            
         </div>
 </div>
 <body>
 
 <div class="container">
     <div class="row">
-    <div class="col-sm-7">
-        <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Check-Up Details</span></div>
+        <div class="col-sm-7">
+            <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Check-Up Details</span></div>
+        </div>
+        <div class="col-sm-5">
+          <div class="pull-right">
+            <div class="input-group">
+                 <form class="navbar-form navbar-left" method="GET">
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="search" value="@if(!empty($searchinput)){{$searchinput}}@endif" placeholder="Search Patient ID">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
+            </div>
+          </div>
         </div>
     </div>
 
@@ -63,10 +75,10 @@
             <th width="60px">No</th>
             <th width="60px">Date</th>
             <th>Patient ID</th>
-                {{request()->session()->get('field')=='cek_id'?(request()->session()->get('sort')=='asc'?'&#9652;':'&#9662;'):''}}
+                {{-- {{request()->session()->get('field')=='cek_id'?(request()->session()->get('sort')=='asc'?'&#9652;':'&#9662;'):''}} --}}
                     
             <th>Name</th>
-                {{request()->session()->get('field')=='cek_name'?(request()->session()->get('sort')=='asc'?'&#9652;':'&#9662;'):''}}
+                {{-- {{request()->session()->get('field')=='cek_name'?(request()->session()->get('sort')=='asc'?'&#9652;':'&#9662;'):''}} --}}
 
             <th>Address</th>
             <th>Age</th>
@@ -81,7 +93,7 @@
             <th>Create At</th> 
             <th>Update At</th>
             <th width="160px" style="vertical-align: middle">
-              <a href="{{ URL::route('Checkup.create') }}"
+              <a href="{{ route('Checkup.create') }}"
                  class="btn btn-primary btn-xs"> <i class="fa fa-plus" aria-hidden="true"></i> Register Patient</a>
             </th>
 
@@ -91,8 +103,9 @@
         @php
             $i = 1;
         @endphp
-
+        {{-- {{dd($posts)}} --}}
         @foreach ($posts as $post)
+
           <tr>
             <td>{{$i++}}</td>
             <td>{{ $post->cek_date }}</td>

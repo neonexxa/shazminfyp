@@ -3,9 +3,7 @@
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('/staff') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-            <a href="{{ url('/medindex') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Medical Details</a>
-            <a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
+            @include('posts.navroute',['panel'=>'medical'])
         </div>
 </div>
 
@@ -19,22 +17,13 @@
         <div class="col-sm-5">
           <div class="pull-right">
             <div class="input-group">
-    
-                <input type="text" 
-                        class="form-control" 
-                        value="{{ request()->session()->get('search') }}"
-                        onkeydown="if (event.keyCode == 13) ajaxLoad('{{url('medindex')}}?search='+this.value)"
-                        id="search"
-                        name="search"
-                        placeholder="Search Patient ID">
-
-                <div class="input-group-btn">
-                    <button type="submit" name="button" 
-                            onclick="ajaxLoad('{{url('medindex')}}?search='+$('#search').val())"
-                            class="btn btn-primary">
-                            <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                 <form class="navbar-form navbar-left" method="GET">
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="search" value="@if(!empty($searchinput)){{$searchinput}}@endif" placeholder="Search Patient ID">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
             </div>
           </div>
         </div>

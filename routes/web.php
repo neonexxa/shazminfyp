@@ -31,27 +31,31 @@ Route::group(['middleware' => ['web','auth']], function(){
   });
 });
 
+/*
+|--------------------------------------------------------------------------
+| Routes For Resources Generic
+|--------------------------------------------------------------------------
+|
+| No description
+|
+*/
 
 Route::resource('posts','PostController');
-Route::get('/create','PostController@create');
-Route::get('/index','PostController@index');
+Route::resource('Medical','MedicalController');
+Route::resource('Daftar','DaftarController');
+Route::resource('Checkup','CheckupController');
+Route::resource('Feedback','FeedbackController');
+
+/*
+|--------------------------------------------------------------------------
+| Routes For Customize Route
+|--------------------------------------------------------------------------
+|
+| No description
+|
+*/
+  
 Route::get('/staff','PostController@staff');
 Route::get('/doctor','PostController@doctor');
-
-Route::resource('Medical','MedicalController');
-Route::get('/medindex','MedicalController@medindex');
-Route::get('/medcreate','MedicalController@medcreate');
-
-Route::resource('Daftar','DaftarController');
-Route::get('/regindex','DaftarController@regindex');
-Route::get('/regcreate','DaftarController@regcreate');
-
-Route::resource('Checkup','CheckupController');
-Route::get('/cekindex','CheckupController@cekindex');
-Route::get('/cekcreate','CheckupController@cekcreate');
-
-Route::resource('/Feedback','FeedbackController');
-Route::get('/feedback','FeedbackController@feedback');
 Route::get('/inputfeedbac','FeedbackController@inputfeedbac');
-Route::get('/feedback2','FeedbackController@feedback2');
 Route::get('/feedback3','FeedbackController@feedback3');

@@ -14,28 +14,18 @@ class MedicalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function medindex(Request $request)
+    public function index(Request $request)
     {
-        
-        $request->session()->put('search', $request
-        ->has('search') ? $request->get('search') : ($request->session()
-        ->has('search') ? $request->session()->get('search') : ''));
-
-        $request->session()->put('field', $request
-                ->has('field') ? $request->get('field') : ($request->session()
-                ->has('field') ? $request->session()->get('field') : 'p_id'));
-
-                $request->session()->put('sort', $request
-                        ->has('sort') ? $request->get('sort') : ($request->session()
-                        ->has('sort') ? $request->session()->get('sort') : 'asc'));
-
-                $medicals = new Medical();
-                    $medicals  = $medicals ->where('p_id', 'like', '%' . $request->session()->get('search') . '%')
-                        ->orderBy($request->session()->get('field'), $request->session()->get('sort'))
-                        ->paginate(5);                   
-                    return view('posts.medindex', compact('medicals'));
-                         
-       
+        $param = $request->all();
+        if (empty($param)) {
+            $medicals = Medical::paginate(5);
+            return view('posts.medindex', compact('medicals'));
+        }else{
+            $searchinput = $param['search'];
+            $medicals = Medical::where('p_id', 'like', '%' . $searchinput . '%')->latest()->paginate(5);
+            // dd($posts);
+            return view('posts.medindex', compact('medicals','searchinput'));
+        }                
     }
 
     /**
@@ -57,7 +47,7 @@ class MedicalController extends Controller
     public function store(MedicalRequest $request)
     {
         Medical::create($request->all());
-        return redirect('medindex')->with ('message', 'Record has been added successfully');
+        return redirect()->route('Medical.index')->with ('message', 'Record has been added successfully');
     }
 
     /**
@@ -94,7 +84,7 @@ class MedicalController extends Controller
     public function update(Request $request, $id)
     {
         Medical::find($id)->update($request->all());
-        return redirect('medindex')->with ('message', 'Record has been updated successfully');
+        return redirect()->route('Medical.index')->with ('message', 'Record has been updated successfully');
     }
 
     /**
@@ -106,6 +96,6 @@ class MedicalController extends Controller
     public function destroy($id)
     {
         Medical::find($id)->delete();
-        return redirect('medindex')->with ('message', 'Record has been deleted successfully');
+        return redirect()->route('Medical.index')->with ('message', 'Record has been deleted successfully');
     }
 }

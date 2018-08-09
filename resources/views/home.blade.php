@@ -17,7 +17,7 @@
                             <p>You're logged in as STAFF</p>
                         </div>
                         <br>
-                        <a href="{{ url('/posts') }}" class="btn btn-primary "> Continue</a>
+                        <a href="{{ url('/staff') }}" class="btn btn-primary "> Continue</a>
                     </div>
                 </div>
             </div>

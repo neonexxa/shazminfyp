@@ -16,28 +16,15 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $request->session()->put('search', $request
-        ->has('search') ? $request->get('search') : ($request->session()
-        ->has('search') ? $request->session()->get('search') : ''));
-
-        $request->session()->put('field', $request
-                ->has('field') ? $request->get('field') : ($request->session()
-                ->has('field') ? $request->session()->get('field') : 'p_id'));
-
-                $request->session()->put('sort', $request
-                        ->has('sort') ? $request->get('sort') : ($request->session()
-                        ->has('sort') ? $request->session()->get('sort') : 'asc'));
-
-                $posts = new Post();
-                    $posts = $posts->where('p_id', 'like', '%' . $request->session()->get('search') . '%')
-                        ->orderBy($request->session()->get('field'), $request->session()->get('sort'))
-                        ->paginate(10);
-                        
-                    if ($request->ajax()) {
-                        return view('posts.index', compact('posts'));
-                    } else {
-                        return view('posts.ajax', compact('posts'));
-      }
+        $param = $request->all();
+        if (empty($param)) {
+            $posts = Post::paginate(10);
+            return view('posts.ajax', compact('posts'));
+        }else{
+            $searchinput = $param['search'];
+            $posts = Post::where('p_id', 'like', '%' . $searchinput . '%')->paginate(10);
+            return view('posts.ajax', compact('posts','searchinput'));
+        }
     }
     public function staff()
     {
@@ -71,7 +58,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         Post::create($request->all());
-          return redirect('index')->with ('message', 'Record has been added successfully');
+          return redirect()->route('posts.index')->with ('message', 'Record has been added successfully');
     }
 
     /**
@@ -109,7 +96,7 @@ class PostController extends Controller
     {
         
         Post::find($id)->update($request->all());
-        return redirect('index')->with ('message', 'Record has been updated successfully');
+        return redirect()->route('posts.index')->with ('message', 'Record has been updated successfully');
     }
 
     /**
@@ -121,6 +108,6 @@ class PostController extends Controller
     public function destroy($id)
     {
         Post::find($id)->delete();
-        return redirect('index')->with ('message', 'Record has been deleted successfully');
+        return redirect()->route('posts.index')->with ('message', 'Record has been deleted successfully');
     }
 }

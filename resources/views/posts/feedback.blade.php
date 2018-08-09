@@ -2,9 +2,8 @@
 <br><br><br>
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
-        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-
+            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+            @include('posts.navroute', ['panel' => 'feedback'])
         </div>
 </div>
 
@@ -14,7 +13,20 @@
         <div class="col-sm-7">
           <h2>Feedback</h2>
         </div>
-
+        <div class="col-sm-5">
+          <div class="pull-right">
+            <div class="input-group">
+                 <form class="navbar-form navbar-left" method="GET">
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="search" value="@if(!empty($searchinput)){{$searchinput}}@endif" placeholder="Search Patient ID">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
             @if(Session::has('message'))
                 <div class= "alert alert-success">{{Session::get('message') }}</div>
@@ -33,6 +45,10 @@
                         <th>Request for Healthcare Record</th>
                         <th>Create At</th> 
                         <th>Update At</th>
+                        <th style="vertical-align: middle">
+                          <a href="{{ route('Feedback.create') }}"
+                             class="btn btn-primary btn-xs"> <i class="fa fa-plus" aria-hidden="true"></i> Comment</a>
+                        </th>
                     </tr>
                 </thead>
 

@@ -14,10 +14,18 @@ class CheckupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cekindex()
+    public function index(Request $request)
     {
-        $posts = Checkup::latest()->paginate(5);
-        return view('posts.cekindex', compact('posts'));
+        $param = $request->all();
+        if (empty($param)) {
+            $posts = Checkup::paginate(5);
+            return view('posts.cekindex', compact('posts'));
+        }else{
+            $searchinput = $param['search'];
+            $posts = Checkup::where('cek_id', 'like', '%' . $searchinput . '%')->latest()->paginate(5);
+            // dd($posts);
+            return view('posts.cekindex', compact('posts','searchinput'));
+        }
     }
 
     /**
@@ -76,7 +84,7 @@ class CheckupController extends Controller
     public function update(Request $request, $id)
     {
         Checkup::find($id)->update($request->all());
-        return redirect('cekindex')->with ('message', 'Record has been updated successfully');
+        return redirect()->route('Checkup.index')->with ('message', 'Record has been updated successfully');
     }
 
     /**
@@ -88,6 +96,6 @@ class CheckupController extends Controller
     public function destroy($id)
     {
         Checkup::find($id)->delete();
-        return redirect('cekindex')->with ('message', 'Record has been deleted successfully');
+        return redirect()->route('Checkup.index')->with ('message', 'Record has been deleted successfully');
     }
 }

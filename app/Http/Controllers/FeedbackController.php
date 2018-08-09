@@ -14,10 +14,17 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function feedback()
+    public function index(Request $request)
     {
-        $posts = Feedback::latest()->paginate(10);
-        return view('posts.feedback', compact('posts'));
+        $param = $request->all();
+        if (empty($param)) {
+            $posts = Feedback::latest()->paginate(10);
+            return view('posts.feedback', compact('posts'));
+        }else{
+            $searchinput = $param['search'];
+            $posts = Feedback::where('f_id', 'like', '%' . $searchinput . '%')->latest()->paginate(10);
+            return view('posts.feedback', compact('posts','searchinput'));
+        }
     }
 
     public function inputfeedbac()
@@ -49,7 +56,7 @@ class FeedbackController extends Controller
     public function store(FeedbackRequest $request)
     {
         Feedback::create($request->all());
-        return redirect('')->with ('message', 'Feedback has been sent!!');
+        return redirect()->route('Feedback.index')->with ('message', 'Feedback has been sent!!');
     }
 
     /**

@@ -13,8 +13,7 @@
 <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a href="{{ url('/staff') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-            <a href="{{ url('/regindex') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
+            @include('posts.navroute',['panel'=>'register'])
 
         </div>
 </div>
@@ -77,5 +76,5 @@
                 </div>
             </div>
   
-  <center><a class="btn btn-primary" href="{{ url('/regindex') }}">Back</a></center>  
+  <center><a class="btn btn-primary" href="{{ route('Daftar.index') }}">Back</a></center>  
 @endsection
