@@ -41,10 +41,11 @@
 
     @case('register')
     	<a href="{{ url('/home') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
-    	<a href="{{ route('Daftar.index') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
+    	
     		@if(Auth::user()->admin)
 				<a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
 			@else
+				<a href="{{ route('Daftar.index') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
 				<a href="{{ url('/staff') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Staff</a>
 			@endif
     	@break
@@ -54,7 +55,10 @@
     	<a href="{{ route('posts.index') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Appointment</a>
     	<a href="{{ route('Checkup.index') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Check-Up Details</a>
     	<a href="{{ route('Medical.index') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Medical Details</a>
-    	<a href="{{ route('Daftar.index') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
+    	@if(Auth::user()->admin)
+		@else
+		<a href="{{ route('Daftar.index') }}"  class="w3-bar-item w3-button w3-hide-small w3-hover-white">Register New Patient</a>
+		@endif
         <a href="{{ route('Feedback.index') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">View Feedback</a>
 @endswitch
 
