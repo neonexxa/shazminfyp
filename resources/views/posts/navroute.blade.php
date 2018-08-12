@@ -31,12 +31,13 @@
 
     @case('feedback')
     	<a href="{{ url('/home') }}"  class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>EHRS</a>
+    	<a href="{{ url('') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Home</a>
     	<a href="{{ route('Feedback.index') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">View Feedback</a>
-    		@if(Auth::user()->admin)
+    		{{-- @if(Auth::user()->admin)
 				<a href="{{ url('/doctor') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
 			@else
 				<a href="{{ url('/staff') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Staff</a>
-			@endif
+			@endif --}}
     	@break
 
     @case('register')

@@ -41,7 +41,7 @@
             
         </style>
     </head>
-    <body background="images/wall7.jpeg">
+    <body background="/images/wall7.jpeg">
         <!-- navigation Bar -->
     <div class="w3-top">
         <div class="w3-bar w3-theme-d2 w3-left-align">

@@ -176,8 +176,8 @@
     <a href="#work" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Treatment</a>
     <a href="{{ url('/home') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Staff</a>
     <a href="{{ url('/home') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Doctor</a>
-    <a href="{{ url('/feedback3') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">View Feedback</a>
-    <a href="{{ url('/inputfeedbac') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Feedback & Review</a>
+    <a href="{{ route('Feedback.index') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">View Feedback</a>
+    <a href="{{ route('Feedback.create') }}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Feedback & Review</a>
     
   </div>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i class="fa fa-search"></i></a>

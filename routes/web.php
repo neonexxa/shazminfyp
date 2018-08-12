@@ -17,10 +17,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['web','auth']], function(){
-  // Route::get('/', function () {
-  //     return view('welcome');
-  // });
-
   Route::get('/home', function() {
     if (Auth::user()->admin == 0) {
       return view('home');
@@ -57,5 +53,3 @@ Route::resource('Feedback','FeedbackController');
   
 Route::get('/staff','PostController@staff');
 Route::get('/doctor','PostController@doctor');
-Route::get('/inputfeedbac','FeedbackController@inputfeedbac');
-Route::get('/feedback3','FeedbackController@feedback3');

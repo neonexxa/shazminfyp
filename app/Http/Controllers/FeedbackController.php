@@ -6,6 +6,7 @@ use App\Feedback;
 use Illuminate\Http\Request;
 use App\Http\Requests\FeedbackRequest;
 Use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class FeedbackController extends Controller
 {
@@ -17,26 +18,22 @@ class FeedbackController extends Controller
     public function index(Request $request)
     {
         $param = $request->all();
-        if (empty($param)) {
-            $posts = Feedback::latest()->paginate(10);
-            return view('posts.feedback', compact('posts'));
-        }else{
-            $searchinput = $param['search'];
-            $posts = Feedback::where('f_id', 'like', '%' . $searchinput . '%')->latest()->paginate(10);
-            return view('posts.feedback', compact('posts','searchinput'));
-        }
-    }
-
-    public function inputfeedbac()
-    {
-        return view('posts.inputfeedbac', compact('posts'));
-    }
-
-    public function feedback3()
-    {
         $posts = Feedback::latest()->paginate(10);
-        return view('posts.feedback3', compact('posts'));
+        if (Auth::check()) {
+            if (empty($param)) {
+                return view('posts.feedback', compact('posts'));
+            }else{
+                $searchinput = $param['search'];
+                $posts = Feedback::where('f_id', 'like', '%' . $searchinput . '%')->latest()->paginate(10);
+                return view('posts.feedback', compact('posts','searchinput'));
+            }
+        }else{
+            return view('posts.feedback3', compact('posts'));    
+        }
+        
+        
     }
+
     /**
      * Show the form for creating a new resource.
      *
